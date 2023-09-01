@@ -6,8 +6,27 @@
     <title>SSRF Vulnerability Proof of Concept</title>
 </head>
 <body>
+
+
+
+
+<h1>SSRF Vulnerability Proof of Concept</h1>
+
+<pre>
+Software: https://www.npmjs.com/package/ip
+Version: <= 1.1.8
+Vulnerabilty: SSRF
+CVE: N/A
+Description of the product:
+IP address utilities for node.js
+Get your ip address, compare ip addresses, validate ip addresses, etc.
+Description of the vulnerability:
+We have discovered some RFC inconsistency in your isPublic() function. As you know, you can specify IP addresses with different formats such as 0x7f1, 127.1, 127.0.0.1. 
+We realized that isPublic() function returns true some of the private IP addresses. Because of this vulnerability, attackers can bypass some SSRF mitigations.
+</pre>
+
     
-    <pre>
+ <pre>
         var ip = require('ip');
         console.log(ip.isPublic("0x7f.1")); // true
 
