@@ -8,19 +8,16 @@
 <body>
 
 
-
-
 <h1>SSRF Vulnerability Proof of Concept</h1>
-
 <pre>
 <b><Software: https://www.npmjs.com/package/ip</b>
 Version: <= 1.1.8</b>
 Vulnerabilty: SSRF</b>
 <b>CVE: N/A</b>
-<h1>Description of the product:</h1>
+<h3>Description of the product:</h3>
 IP address utilities for node.js
 Get your ip address, compare ip addresses, validate ip addresses, etc.
-Description of the vulnerability:
+<h3>Description of the vulnerability:</h3>
 We have discovered some missing control in your isPublic() function for identifying Public and Private IP address. 
 As you know, you can specify IP addresses with different formats such as 0x7f1, 127.1, 127.0.0.1. We realized that isPublic() function returns true some of the private IP addresses. 
 Because of this vulnerability, attackers can bypass some SSRF mitigations.
