@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSRF Vulnerability Proof of Concept</title>
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,7 +33,7 @@ Because of this vulnerability, attackers can bypass some SSRF mitigations.
 
 
 <h1>PoC</h1>
- <pre>
+ <code>
         var ip = require('ip');
         console.log(ip.isPublic("0x7f.1")); // true
 
@@ -41,6 +49,6 @@ Because of this vulnerability, attackers can bypass some SSRF mitigations.
         } else {
             console.log("IP is not public");
         }
-    </pre>
+ </code>
 </body>
 </html>
