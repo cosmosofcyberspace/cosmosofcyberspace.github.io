@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote code execution due to use of very old and deprecated version of fsevents library</title>
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<h1>Remote code execution due to use of very old and deprecated version of fsevents library</h1>
+<pre>
+<b><Software: https://github.com/fsevents/fsevents/releases/tag/v1.2.10</b>
+<b>Version: <= 1.2.10</b>
+<b>Vulnerabilty: Exposure of Resource to Wrong Sphere </b>
+<b>CVE: N/A</b>
+<h3>Description of the vulnerability:</h3>
+There is a insecure and deprecated version of "fsevents" Node.js library. This can allowed an attacker to execute arbitrary code on hosts belonging to this repo. 
+Older versions of "fsevents" Node.js library are vulnerable to code injection because they download additional binaries from dynamically generated URLs. 
+I discovered that versions up to 1.x.x of fsevents library download binaries from a S3 bucket URL https://fsevents-binaries.s3-us-west-2.amazonaws.com  but the bucket fsevents-binaries did not exist. 
+This can made it possible for an attacker to claim this S3 bucket and upload arbitrary code in there. 
+Because this bucket had expired an if a attacker take this addres he/she can upload malicious binary and this will end up with getting remote access on the endpoint which use this insecure and 
+deprecated version of fsevents Node.js library.
+</pre>
+<h1>References</h1>
+ <code>
+        https://www.npmjs.com/package/fsevents/v/1.0.0
+        https://www.npmjs.com/package/fsevents/v/1.2.2
+        https://www.npmjs.com/package/fsevents/v/1.2.9
+        https://security.snyk.io/vuln/SNYK-JS-FSEVENTS-5487987
+ </code>
+</body>
+</html>
