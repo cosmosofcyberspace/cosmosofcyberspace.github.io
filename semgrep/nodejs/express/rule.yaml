@@ -1,0 +1,19 @@
+rules:
+  - id: express_route_decorator_detection
+    patterns:
+      - pattern-either:
+          - pattern: $Y.get($X, ...)
+          - pattern: $Y.post($X, ...)
+          - pattern: $Y.put($X, ...)
+          - pattern: $Y.delete($X, ...)
+          - pattern: $Y.patch($X, ...)
+      - pattern-inside: |
+          require('express')
+          ...
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            - pattern-regex: \/[^'"]*[*]
+    message: "Detected express path decorator with * character may lead to web cache deception"
+    severity: INFO
+    languages: [js, javascript]
