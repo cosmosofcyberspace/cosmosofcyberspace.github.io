@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+  
+<body style="background-color:black;">
+
+<h1 style="background-color:MediumSeaGreen;">Express / Nodejs Cache Deception</h1>
+
+<h3 style="background-color:Gray;">cache_deception.js</h3>
+<pre>
+<code>
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/info/nuri.yavuz*', (req, res) => {
+  res.send('Company: Trendyol, Birth Date: 1997, Country: Turkey, Phone: 5554443322')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})  
+</code>
+</pre>
+<br>
+<h3 style="background-color:Gray;">cache_deception_rule.yaml</h3>
+<pre>
+<code>
+rules:
+  - id: express_route_decorator_detection
+    patterns:
+      - pattern-either:
+          - pattern: $Y.get($X, ...)
+          - pattern: $Y.post($X, ...)
+          - pattern: $Y.put($X, ...)
+          - pattern: $Y.delete($X, ...)
+          - pattern: $Y.patch($X, ...)
+      - pattern-inside: |
+          require('express')
+          ...
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            - pattern-regex: \/[^'"]*[*]
+    message: "Detected express path decorator with * character may lead to web cache deception"
+    severity: INFO
+    languages: [js, javascript]
+</code>
+</pre>
+  
+ <h3 style="background-color:Gray;">PoC Video</h3>
+<video width="600" height="500" controls>
+<source src="/semgrep/nodejs/express/express_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
+
