@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>express/nodejs cache deception</h2>
+
+<code>
+  
+<br>rules:</br>
+  <br>- id: express_route_decorator_detection</br>
+    <br>patterns:</br>
+      <br>- pattern-either:</br>
+          <br>- pattern: $Y.get($X, ...)</br>
+          <br>- pattern: $Y.post($X, ...)</br>
+          <br>- pattern: $Y.put($X, ...)</br>
+          <br>- pattern: $Y.delete($X, ...)</br>
+          <br>- pattern: $Y.patch($X, ...)</br>
+      <br>- pattern-inside: |</br>
+          <br>require('express')</br>
+          <br>...</br>
+      <br>- metavariable-pattern:</br>
+          <br>metavariable: $X</br>
+          <br>patterns:</br>
+            <br>- pattern-regex: \/[^'"]*[*]</br>
+    <br>message: "Detected express path decorator with * character may lead to web cache deception"</br>
+    <br>severity: INFO</br>
+    <br>languages: [js, javascript]</br>
+  
+ </code>
+
+
+  
+<video width="320" height="240" controls>
+<source src="/semgrep/nodejs/express/express_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
+
