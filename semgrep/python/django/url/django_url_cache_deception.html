@@ -46,14 +46,15 @@ rules:
   - id: django_route_decorator_detection
     patterns:
       - pattern-either:
-        - pattern: url($X, ..., name=...)
+        - pattern: url($X, ..., ...)
       - pattern-inside: |
           from django.conf.urls import url
           ...
       - metavariable-pattern:
           metavariable: $X
           patterns:
-            - pattern-regex: r'\^[\w]+\/?[^$]'
+            - pattern-regex: r'\^[\w]+\/?[^\$]'
+            - pattern-regex: ^(?!.*\+).*
     message: "Detected Django route decorator usage: {{source()}}"
     severity: INFO
     languages: [python]
@@ -65,6 +66,7 @@ metadata:
   impact: HIGH
   technology: [python, django]
   description: "`Django Path` Possible Web Cache Deception"
+
 
 </code>
 </pre>
