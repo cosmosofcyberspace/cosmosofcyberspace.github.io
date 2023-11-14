@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+  
+<body style="background-color:black;">
+
+<h1 style="background-color:MediumSeaGreen;">Typescript Cache Deception</h1>
+
+<h3 style="background-color:Gray;">cache_deception.ts</h3>
+<pre>
+<code>
+import { IRouter } from '../../shared/models/router/router';
+import { Response, Router } from 'express';
+import { Server } from '../../server';
+import { AppRequest } from '../../shared/models/requestContext';
+import { safeRoute } from 'ty-utility';
+import { inject, injectable } from 'inversify';
+import { FragmentsClientController } from './controllers/fragmentsClientController';
+import { StatusCode } from '../../shared/enums/statusCode';
+import { TokenMiddleware } from '@discovery/web-gateway-middleware';
+
+@injectable()
+export class FragmentsRouter implements IRouter {
+  router: Router;
+
+  constructor(
+    @inject(FragmentsClientController) private clientController: FragmentsClientController,
+    @inject(TokenMiddleware) private tokenMiddleware: TokenMiddleware
+  ) {
+    this.router = Router();
+
+    this.setRoutes = this.setRoutes.bind(this);
+    this.getPreferencesPopup = this.getPreferencesPopup.bind(this);
+    this.getUserInformation = this.getUserInformation.bind(this);
+    this.getPreferencesPage = this.getPreferencesPage.bind(this);
+  }
+
+  register(server: Server): void {
+    this.setRoutes();
+
+    server.app.use('/fragment', this.router);
+  }
+
+  setRoutes() {
+    this.router.get('/preferences-popup', this.tokenMiddleware.resolve, this.getPreferencesPopup);
+    this.router.get('/user-information*', this.tokenMiddleware.resolve, this.getUserInformation);
+    this.router.get('/preferences-page*', this.tokenMiddleware.resolve, this.getPreferencesPage);
+    this.router.get("/preferences-page*", this.tokenMiddleware.resolve, this.getPreferencesPage);
+    this.router.get('/user-information/Hesabim/KullaniciBilgileri', this.tokenMiddleware.resolve, this.getUserInformation);
+    this.router.get('/preferences-page/Hesabim/DuyuruTercihleri', this.tokenMiddleware.resolve, this.getPreferencesPage);
+  }
+
+  @safeRoute
+  async getPreferencesPopup(req: AppRequest, res: Response) {
+    const result = await this.clientController.getPreferencesPopup(req);
+
+    return res.status(StatusCode.OK).send(result);
+  }
+
+  @safeRoute
+  async getPreferencesPage(req: AppRequest, res: Response) {
+    const result = await this.clientController.getPreferencesPage(req);
+
+    res.setHeader("Cache-Control", "no-cache");
+    return res.status(StatusCode.OK).send(result);
+  }
+
+  @safeRoute
+  async getUserInformation(req: AppRequest, res: Response) {
+    const response = await this.clientController.getUserInformation(req);
+
+    res.setHeader("Cache-Control", "no-cache");
+    return res.status(response.statusCode).send(response);
+  }
+}
+
+
+</code>
+</pre>
+<br>
+<h3 style="background-color:Gray;">cache_deception_rule.yaml</h3>
+<pre>
+<code>
+rules:
+  - id: detect-regex-star-typescript
+    patterns:
+      - pattern-either:
+        - pattern: $Y.get($X, ..., ...)
+        - pattern: $Y.post($X, ..., ...)
+        - pattern: $Y.put($X, ..., ...)
+        - pattern: $Y.delete($X, ..., ...)
+        - pattern: $Y.patch($X, ..., ...)
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            - pattern-regex: \/[^'"]*[*]
+    message: "Detected TypeScript route decorator usage: {{source()}}"
+    severity: INFO
+    languages: [ts]
+metadata:
+  category: security
+  cwe: "CWE-525: Use of Web Browser Cache Containing Sensitive Information"
+  subcategory: [audit]
+  confidence: HIGH
+  impact: HIGH
+  technology: [typescript]
+  description: "`TypeScript` Possible Web Cache Deception"
+
+
+</code>
+</pre>
+  
+ <h3 style="background-color:Gray;">PoC Video</h3>
+<video width="600" height="500" controls>
+<source src="/semgrep/typescript/typescript_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
