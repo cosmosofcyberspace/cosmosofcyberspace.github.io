@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+  
+<body style="background-color:black;">
 
+<h1 style="background-color:MediumSeaGreen;">Go / gofiber Cache Deception</h1>
+
+<h3 style="background-color:Gray;">cache_deception.go</h3>
+<pre>
+<code>
+package main
+
+import (
+    "fmt"
+    "log"
+
+    "github.com/gofiber/fiber/v2"
+)
+
+func main() {
+    app := fiber.New()
+
+    // GET /api/register
+    app.Get("/api/*", func(c *fiber.Ctx) error {
+        msg := fmt.Sprintf("✋")
+        return c.SendString(msg) // => ✋ register
+    })
+
+    // GET /flights/LAX-SFO
+    app.Get("/flights/:from-:to", func(c *fiber.Ctx) error {
+        msg := fmt.Sprintf("💸 From: %s, To: %s", c.Params("from"), c.Params("to"))
+        return c.SendString(msg) // => 💸 From: LAX, To: SFO
+    })
+
+    // GET /dictionary.txt
+    app.Get("/:file.:ext", func(c *fiber.Ctx) error {
+        msg := fmt.Sprintf("📃 %s.%s", c.Params("file"), c.Params("ext"))
+        return c.SendString(msg) // => 📃 dictionary.txt
+    })
+
+    log.Fatal(app.Listen(":3000"))
+}
+
+
+</code>
+</pre>
+<br>
+<h3 style="background-color:Gray;">cache_deception_rule.yaml</h3>
+<pre>
+<code>
+rules:
+  - id: detect-regex-path-star-gofiber
+    patterns:
+      - pattern-either:
+          - pattern: $Y.Get(..., $X, ...)
+          - pattern: $Y.Post(..., $X, ...)
+          - pattern: $Y.Put(..., $X, ...)
+          - pattern: $Y.Delete(..., $X, ...)
+          - pattern: $Y.Patch(..., $X, ...)
+      - pattern-inside: |
+          import "github.com/gofiber/fiber"
+          ...
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            - pattern-regex: /\*[\w\s]*
+    message: Avoid using '/path*' regex pattern in GoFiber.
+    languages:
+      - go
+    severity: WARNING
+metadata:
+    category: security
+    cwe: "CWE-525: Use of Web Browser Cache Containing Sensitive Information"
+    subcategory: [audit]
+    confidence: HIGH
+    impact: HIGH
+    technology: [golang, gofiber]
+    description: "`Golang GoFiber` Possible Web Cache Deception"
+
+
+</code>
+</pre>
+  
+ <h3 style="background-color:Gray;">PoC Video</h3>
+<video width="600" height="500" controls>
+<source src="/semgrep/go/go-chi/go_gofiber_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
