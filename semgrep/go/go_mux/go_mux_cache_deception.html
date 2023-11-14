@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+  
+<body style="background-color:black;">
 
+<h1 style="background-color:MediumSeaGreen;">Go / gomux Cache Deception</h1>
+
+<h3 style="background-color:Gray;">cache_deception.go</h3>
+<pre>
+<code>
+import(
+    "log"
+    "net/http"
+)
+
+func main() {
+    mux := http.NewServeMux()
+    mux.HandleFunc("/test*", index)
+
+    err := http.ListenAndServe(":3000", mux)
+    log.Fatal(err)
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+    if r.URL.Path != "/" {
+        http.NotFound(w, r)
+        return
+    }
+
+    // Common code for all requests can go here...
+
+    switch r.Method {
+    case http.MethodGet:
+        // Handle the GET request...
+
+    case http.MethodPost:
+        // Handle the POST request...
+
+    case http.MethodOptions:
+        w.Header().Set("Allow", "GET, POST, OPTIONS")
+        w.WriteHeader(http.StatusNoContent)
+
+    default:
+        w.Header().Set("Allow", "GET, POST, OPTIONS")
+        http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+    }
+}
+
+
+</code>
+</pre>
+<br>
+<h3 style="background-color:Gray;">cache_deception_rule.yaml</h3>
+<pre>
+<code>
+rules:
+- id: detect-generic-path-star-mux
+  patterns:
+    - pattern-either: 
+      - pattern: $Y.HandleFunc($X, ...)
+    - pattern-inside: |
+          import "net/http"
+          ...
+    - metavariable-pattern:
+        metavariable: $X
+        patterns:
+          - pattern-regex: /[\w]*\*
+  message: Avoid using regex patterns with asterisk (*) in route handlers.
+  languages: [go]
+  severity: WARNING
+metadata:
+    category: security
+    cwe: "CWE-525: Use of Web Browser Cache Containing Sensitive Information"
+    subcategory: [audit]
+    confidence: HIGH
+    impact: HIGH
+    technology: [golang, httprouter]
+    description: "`Golang Mux` Possible Web Cache Deception"
+
+
+</code>
+</pre>
+  
+ <h3 style="background-color:Gray;">PoC Video</h3>
+<video width="600" height="500" controls>
+<source src="/semgrep/go/go-mux/go_gomux_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
