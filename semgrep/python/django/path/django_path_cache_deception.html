@@ -1,1 +1,84 @@
-a
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+  
+<body style="background-color:black;">
+
+<h1 style="background-color:MediumSeaGreen;">Python / Django "path" Cache Deception</h1>
+
+<h3 style="background-color:Gray;">cache_deception.py</h3>
+<pre>
+<code>
+from django.urls import path
+from .views import HomePageView, PostDetailView, AddPostView
+
+app_name = 'feed'
+
+urlpatterns = [
+    path('', HomePageView.as_view(), name='index'),
+    path('test/<path:path>', HomePageView.as_view(), name='index'),
+    path('detail/<int:pk>/', PostDetailView.as_view(), name='detail'),
+    path('post/', AddPostView.as_view(), name='post'),
+    path("/test*"),
+    path("/test/sdfsdf/sdfdsf*"),
+    path("/test/sdfsdf/*"),
+    path("/index*", views.index, name="main-view"),
+    path("index*/", views.index, name="main-view"),
+    path("bio/<username>*", views.bio, name="bio"),
+    path("articles/<slug:title>/*", views.article, name="article-detail"),
+    path("articles/<slug:title>/<int:section>/", views.section, name="article-section"),
+    path("blog/", include("blog.urls")),
+
+]
+</code>
+</pre>
+<br>
+<h3 style="background-color:Gray;">cache_deception_rule.yaml</h3>
+<pre>
+<code>
+rules:
+  - id: django_route_decorator_detection
+    patterns:
+      - pattern-either:
+        - pattern: path($X, ...)
+        - pattern-inside: |
+            import path
+            ...
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            - pattern-regex: \/[^'"]*path:(.+)>
+    message: "Detected Django route decorator usage: {{source()}}"
+    severity: INFO
+    languages: [python]
+metadata:
+  category: security
+  cwe: "CWE-525: Use of Web Browser Cache Containing Sensitive Information"
+  subcategory: [audit]
+  confidence: HIGH
+  impact: HIGH
+  technology: [python, django]
+  description: "`Django Path` Possible Web Cache Deception"
+
+
+</code>
+</pre>
+  
+ <h3 style="background-color:Gray;">PoC Video</h3>
+<video width="600" height="500" controls>
+<source src="/semgrep/python/django/django_path_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
