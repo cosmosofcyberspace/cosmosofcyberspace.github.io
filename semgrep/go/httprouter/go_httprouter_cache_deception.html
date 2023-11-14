@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+  
+<body style="background-color:black;">
 
+<h1 style="background-color:MediumSeaGreen;">Go / gorilla Cache Deception</h1>
+
+<h3 style="background-color:Gray;">cache_deception.go</h3>
+<pre>
+<code>
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "log"
+
+    "github.com/julienschmidt/httprouter"
+)
+
+func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+    fmt.Fprint(w, "Welcome!\n")
+}
+
+func Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+    fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
+}
+
+func main() {
+    router := httprouter.New()
+    router.GET("/test/*filepath", Index)
+    router.GET("/*filepath", Index)
+    router.POST("/*filepath", Index)
+    router.GET("/hello/:name", Hello)
+
+    log.Fatal(http.ListenAndServe(":8080", router))
+}
+
+
+</code>
+</pre>
+<br>
+<h3 style="background-color:Gray;">cache_deception_rule.yaml</h3>
+<pre>
+<code>
+rules:
+  - id: detect-regex-path-star-httprouter
+    patterns:
+      - pattern-either:
+          - pattern: $Y.GET(..., $X, ...)
+          - pattern: $Y.POST(..., $X, ...)
+          - pattern: $Y.PUT(..., $X, ...)
+          - pattern: $Y.DELETE(..., $X, ...)
+          - pattern: $Y.PATCH(..., $X, ...)
+      - pattern-inside: |
+          import "github.com/julienschmidt/httprouter"
+          ...
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            - pattern-regex: /\*[\w\s]*
+    message: Avoid using '/path*' regex pattern in HTTPRouter.
+    languages:
+      - go
+    severity: WARNING
+metadata:
+    category: security
+    cwe: "CWE-525: Use of Web Browser Cache Containing Sensitive Information"
+    subcategory: [audit]
+    confidence: HIGH
+    impact: HIGH
+    technology: [golang, httprouter]
+    description: "`Golang HTTPRouter` Possible Web Cache Deception"
+
+</code>
+</pre>
+  
+ <h3 style="background-color:Gray;">PoC Video</h3>
+<video width="600" height="500" controls>
+<source src="/semgrep/go/httprouter/go_httprouter_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
