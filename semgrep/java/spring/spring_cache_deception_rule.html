@@ -1,1 +1,96 @@
-aa
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Arka plan rengi */
+        code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            display: block;
+        }
+    </style>
+</head>
+  
+<body style="background-color:black;">
+
+<h1 style="background-color:MediumSeaGreen;">Java / Spring Cache Deception</h1>
+
+<h3 style="background-color:Gray;">cache_deception.java</h3>
+<pre>
+<code>
+package com.jlcastaneda.market.web.controller;
+import com.jlcastaneda.market.domain.Product;
+import com.jlcastaneda.market.domain.service.ProductService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/test1*")
+
+{
+@GetMapping("/test2*") //ResponseEntity no ayuda a manejar las repsuestas y llamados de nuestros controladores
+@PostMapping("/test3*")
+@PutMapping("/test4*")
+@DeleteMapping("/test5*")
+@PostMapping("/test6*")
+
+@RequestMapping(value = "/products7*")
+@GetMapping(value = "/products8*")
+@PostMapping(x = "/products9*")
+@PutMapping(y = "/products10*")
+@DeleteMapping(z = "/products11*")
+
+}
+
+</code>
+</pre>
+<br>
+<h3 style="background-color:Gray;">cache_deception_rule.yaml</h3>
+<pre>
+<code>
+rules:
+- id: detect-regex-path-star
+  pattern-either:
+        - pattern: RequestMapping(...)
+        - pattern: GetMapping(...)
+        - pattern: PostMapping(...)
+        - pattern: PutMapping(...)
+        - pattern: DeleteMapping(...)
+        - pattern: RequestMapping(..., $X = "...", ...)
+        - pattern: GetMapping(..., $X = "...", ...)
+        - pattern: PostMapping(..., $X = "...", ...)
+        - pattern: PutMapping(..., $X = "...", ...)
+        - pattern: DeleteMapping(..., $X = "...", ...)
+        - pattern-regex: /[\w\s]*\*
+  message: Avoid using '/path*' regex pattern in RequestMapping.
+  languages: [java]
+  severity: WARNING
+metadata:
+    category: security
+    cwe: "CWE-525: Use of Web Browser Cache Containing Sensitive Information"
+    subcategory: [audit]
+    confidence: HIGH
+    impact: HIGH
+    technology: [spring]
+    description: "`Spring` Possible Web Cache Deception"
+</code>
+</pre>
+  
+ <h3 style="background-color:Gray;">PoC Video</h3>
+<video width="600" height="500" controls>
+<source src="/semgrep/java/spring/spring_cache_deception.mov" type="video/mp4">
+</video> 
+
+</body>
+</html>
