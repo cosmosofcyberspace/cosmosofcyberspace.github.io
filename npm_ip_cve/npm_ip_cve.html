@@ -26,7 +26,7 @@
     
 
 <b>Vulnerabilty: Missing IP Address Control in isPublic() Function Leads to SSRF Bypass</b>
-<h1>Description of the product:</h1>
+<h3>Description of the product:</h3>
 IP address utilities for node.js
 Get your ip address, compare ip addresses, validate ip addresses, etc.</br></br>
 
@@ -39,7 +39,7 @@ The core issue is the function's failure to accurately distinguish between publi
 </pre></br></br>
 
     
-<h1>Root Cause</h1>
+<h3>Root Cause</h3>
 The root cause of this vulnerability is the ip.isPublic function's inability to correctly interpret and classify certain IP address representations. </br>
 Specifically, the function fails to recognize 0x7f.1 as a private IP address, which is actually a hexadecimal and shorthand notation for 127.0.0.1, a well-known loopback address.</br>
 This misinterpretation leads to the function erroneously categorizing a private IP as public, thereby opening up the potential for Server-Side Request Forgery (SSRF) attacks. </br>
@@ -61,5 +61,6 @@ The core issue lies in the inadequate handling of non-standard IP address format
             <br>console.log("IP is not public");</br>
         <br>}</br>
  </code>
+    </br></br>
 </body>
 </html>
