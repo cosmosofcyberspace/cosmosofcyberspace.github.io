@@ -64,12 +64,12 @@ The core issue lies in the inadequate handling of non-standard IP address format
     </br>
 
 <h3>Impact:</h3>
-The impact of this vulnerability is significant, as it can lead to Server-Side Request Forgery (SSRF) attacks. 
-SSRF attacks occur when an attacker is able to induce a server to make requests to internal resources, which the attacker normally couldn't access directly. 
-In this case, the misclassification of 0x7f.1 as a public IP address allows for unintended internal network requests. 
-This could potentially expose sensitive information, interact with internal services, or exploit vulnerabilities within the network. 
-Additionally, such vulnerabilities can be leveraged to perform port scanning, gain unauthorized access, or as part of a larger attack chain. 
-The risk is heightened in environments where the server has access to critical internal systems.
+The impact of this vulnerability is significant, as it can lead to Server-Side Request Forgery (SSRF) attacks. </br>
+SSRF attacks occur when an attacker is able to induce a server to make requests to internal resources, which the attacker normally couldn't access directly. </br>
+In this case, the misclassification of 0x7f.1 as a public IP address allows for unintended internal network requests. </br>
+This could potentially expose sensitive information, interact with internal services, or exploit vulnerabilities within the network. </br>
+Additionally, such vulnerabilities can be leveraged to perform port scanning, gain unauthorized access, or as part of a larger attack chain. </br>
+The risk is heightened in environments where the server has access to critical internal systems.</br>
 </br></br>
 
 
