@@ -36,7 +36,7 @@ In the code snippet of library, a security vulnerability arises due to the ip.is
 This address is actually a hexadecimal representation of the private IP 127.0.0.1. </br>
 This misclassification can lead to potential Server-Side Request Forgery (SSRF) attacks, as the code may unintentionally permit HTTP requests to internal network resources, creating a significant security risk.</br> 
 The core issue is the function's failure to accurately distinguish between public and private IP addresses.</br>
-</pre></br></br>
+</br></br>
 
     
 <h3>Root Cause:</h3>
