@@ -45,7 +45,7 @@ Specifically, the function fails to recognize 0x7f.1 as a private IP address, wh
 This misinterpretation leads to the function erroneously categorizing a private IP as public, thereby opening up the potential for Server-Side Request Forgery (SSRF) attacks. </br>
 The core issue lies in the inadequate handling of non-standard IP address formats by the IP address validation mechanism.</br></br>
     
-<h1>PoC:</h1>
+<h3>PoC:</h3>
  <code>
         <br>var ip = require('ip');</br>
         <br>console.log(ip.isPublic("0x7f.1")); // true</br>
