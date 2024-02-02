@@ -39,13 +39,13 @@ The core issue is the function's failure to accurately distinguish between publi
 </pre></br></br>
 
     
-<h3>Root Cause</h3>
+<h3>Root Cause:</h3>
 The root cause of this vulnerability is the ip.isPublic function's inability to correctly interpret and classify certain IP address representations. </br>
 Specifically, the function fails to recognize 0x7f.1 as a private IP address, which is actually a hexadecimal and shorthand notation for 127.0.0.1, a well-known loopback address.</br>
 This misinterpretation leads to the function erroneously categorizing a private IP as public, thereby opening up the potential for Server-Side Request Forgery (SSRF) attacks. </br>
 The core issue lies in the inadequate handling of non-standard IP address formats by the IP address validation mechanism.</br></br>
     
-<h1>PoC</h1>
+<h1>PoC:</h1>
  <code>
         <br>var ip = require('ip');</br>
         <br>console.log(ip.isPublic("0x7f.1")); // true</br>
