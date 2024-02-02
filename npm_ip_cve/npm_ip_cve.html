@@ -28,7 +28,7 @@
 <b>Vulnerabilty: Missing IP Address Control in isPublic() Function Leads to SSRF Bypass</b>
 <h3>Description of the product:</h3>
 IP address utilities for node.js
-Get your ip address, compare ip addresses, validate ip addresses, etc.</br></br>
+Get your ip address, compare ip addresses, validate ip addresses, etc.</br>
 <h3>Description of the vulnerability:</h3>
 In the code snippet of library, a security vulnerability arises due to the ip.isPublic function's incorrect identification of the IP address 0x7f.1 as public.</br>
 This address is actually a hexadecimal representation of the private IP 127.0.0.1. </br>
