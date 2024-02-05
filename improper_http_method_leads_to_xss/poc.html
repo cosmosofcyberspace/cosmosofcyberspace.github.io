@@ -26,7 +26,10 @@
 
     <p>As seen in the following proof of concept (PoC), the line 'r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)' invokes the 'httpSwagger.WrapHandler' handler from the 'swaggo/http-swagger' library. Subsequently, when examining the 'WrapHandler' function, we observe the following code block within the 'swagger.go' file.</p>
 
-    <pre><code> ```golang
+    <pre>
+	    
+<code> 
+```golang
 switch path {
 		case "index.html":
 			_ = index.Execute(w, config)
@@ -43,11 +46,14 @@ switch path {
 		default:
 			h.ServeHTTP(w, r)
 		}
-``` </code></pre>
+``` 
+</code></pre>
 
     <p>Next, when we follow the 'h.ServeHTTP' function in the 'swagger.go' file, we noticed that we can enter the PUT HTTP method within the switch-case structure.</p>
 
-    <pre><code> golang
+    <pre>
+<code> 
+golang
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	status, err := http.StatusBadRequest, errUnsupportedMethod
 	if h.FileSystem == nil {
@@ -77,11 +83,16 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		case "PROPPATCH":
 			status, err = h.handleProppatch(w, r)
 		}
-	} </code></pre>
+	} 
+</code>
+</pre>
 
     <p>Following this, when we trace the 'h.handlePut(w, r)' function in the 'PUT' case, we noticed that the uploaded file is stored in memory through *webdav.memFile.</p>
 
-    <pre><code> golang
+    <pre>
+
+<code>
+golang
 func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int, err error) {
 	reqPath, status, err := h.stripPrefix(r.URL.Path)
 	if err != nil {
@@ -119,15 +130,18 @@ func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int,
 	}
 	w.Header().Set("ETag", etag)
 	return http.StatusCreated, nil
-} </code></pre>
+} 
+</code></pre>
 
+	
     <p>As a result, the file written to memory can later be retrieved using the GET method.</p>
 
     <h3>PoC</h3>
 
     <pre>
 
-<code> golang
+<code> 
+golang
 package main
 
 import (
