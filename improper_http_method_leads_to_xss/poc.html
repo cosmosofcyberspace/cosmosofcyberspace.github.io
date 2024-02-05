@@ -27,9 +27,11 @@
     <p>As seen in the following proof of concept (PoC), the line 'r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)' invokes the 'httpSwagger.WrapHandler' handler from the 'swaggo/http-swagger' library. Subsequently, when examining the 'WrapHandler' function, we observe the following code block within the 'swagger.go' file.</p>
 
     <pre>
+
 	    
 <code> 
-```golang
+```
+golang
 switch path {
 		case "index.html":
 			_ = index.Execute(w, config)
@@ -52,7 +54,9 @@ switch path {
     <p>Next, when we follow the 'h.ServeHTTP' function in the 'swagger.go' file, we noticed that we can enter the PUT HTTP method within the switch-case structure.</p>
 
     <pre>
+	    
 <code> 
+```
 golang
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	status, err := http.StatusBadRequest, errUnsupportedMethod
@@ -84,6 +88,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			status, err = h.handleProppatch(w, r)
 		}
 	} 
+```
 </code>
 </pre>
 
@@ -91,7 +96,9 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
     <pre>
 
+	    
 <code>
+```
 golang
 func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int, err error) {
 	reqPath, status, err := h.stripPrefix(r.URL.Path)
@@ -131,6 +138,7 @@ func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int,
 	w.Header().Set("ETag", etag)
 	return http.StatusCreated, nil
 } 
+```
 </code></pre>
 
 	
@@ -141,6 +149,7 @@ func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int,
     <pre>
 
 <code> 
+```
 golang
 package main
 
@@ -179,6 +188,7 @@ func main() {
 		fmt.Println(err)
 	}
 } 
+```
 </code></pre>
 
 
