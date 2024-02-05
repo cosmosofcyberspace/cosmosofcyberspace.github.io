@@ -30,7 +30,6 @@
 
 	    
 <code> 
-```
 golang
 switch path {
 		case "index.html":
@@ -48,7 +47,6 @@ switch path {
 		default:
 			h.ServeHTTP(w, r)
 		}
-``` 
 </code></pre>
 
     <p>Next, when we follow the 'h.ServeHTTP' function in the 'swagger.go' file, we noticed that we can enter the PUT HTTP method within the switch-case structure.</p>
@@ -56,7 +54,6 @@ switch path {
     <pre>
 	    
 <code> 
-```
 golang
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	status, err := http.StatusBadRequest, errUnsupportedMethod
@@ -88,7 +85,6 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			status, err = h.handleProppatch(w, r)
 		}
 	} 
-```
 </code>
 </pre>
 
@@ -98,7 +94,6 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	    
 <code>
-```
 golang
 func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int, err error) {
 	reqPath, status, err := h.stripPrefix(r.URL.Path)
@@ -138,7 +133,6 @@ func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int,
 	w.Header().Set("ETag", etag)
 	return http.StatusCreated, nil
 } 
-```
 </code></pre>
 
 	
@@ -149,7 +143,6 @@ func (h *Handler) handlePut(w http.ResponseWriter, r *http.Request) (status int,
     <pre>
 
 <code> 
-```
 golang
 package main
 
@@ -188,7 +181,6 @@ func main() {
 		fmt.Println(err)
 	}
 } 
-```
 </code></pre>
 
 
