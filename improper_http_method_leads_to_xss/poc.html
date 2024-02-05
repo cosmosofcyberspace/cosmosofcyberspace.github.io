@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improper Handling of HTTP Methods Leads to XSS</title>
+</head>
+
+<body>
+    <h2>Improper Handling of HTTP Methods Leads to XSS</h2>
+    <p><strong>Version</strong>: <= v1.2.5<br>
+        <strong>Fixed Version</strong>: => v.1.2.6<br>
+        <strong>CVE ID</strong>: N/A<br>
+        <strong>Vulnerability Type</strong>: Improper Handling of HTTP Methods</p>
+
+    <hr>
+
+    <h3>Description of the Vulnerability</h3>
+
+    <p>In versions of the swaggo/http-swagger library below v1.2.5, proper HTTP method validation is not enforced. As a result, the handler 'httpSwagger.WrapHandler' and the 'PUT' request can be used to upload a file to memory through *webdav.memFile. Subsequently, this file can be accessed using the GET method. An attacker could exploit this by uploading an HTML file containing malicious JavaScript to memory, making it accessible to other users.</p>
+
+    <hr>
+
+    <h3>Root Cause</h3>
+
+    <p>As seen in the following proof of concept (PoC), the line 'r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)' invokes the 'httpSwagger.WrapHandler' handler from the 'swaggo/http-swagger' library. Subsequently, when examining the 'WrapHandler' function, we observe the following code block within the 'swagger.go' file.</p>
+
+    <pre><code> <!-- Code block, golang code here --> </code></pre>
+
+    <p>Next, when we follow the 'h.ServeHTTP' function in the 'swagger.go' file, we noticed that we can enter the PUT HTTP method within the switch-case structure.</p>
+
+    <pre><code> <!-- Code block, golang code here --> </code></pre>
+
+    <p>Following this, when we trace the 'h.handlePut(w, r)' function in the 'PUT' case, we noticed that the uploaded file is stored in memory through *webdav.memFile.</p>
+
+    <pre><code> <!-- Code block, golang code here --> </code></pre>
+
+    <p>As a result, the file written to memory can later be retrieved using the GET method.</p>
+
+    <h3>PoC</h3>
+
+    <pre><code> <!-- Code block, golang code here --> </code></pre>
+
+    <hr>
+
+    <h3>Impact</h3>
+
+    <p>The attacker can store any desired file in memory using the PUT method. The attacker may store an HTML file containing malicious JavaScript code in memory. Subsequently, the attacker can conduct an XSS attack by sharing the URL with regular users.</p>
+</body>
+
+</html>
