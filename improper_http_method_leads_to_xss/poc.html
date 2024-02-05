@@ -26,7 +26,7 @@
 
     <p>As seen in the following proof of concept (PoC), the line 'r.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)' invokes the 'httpSwagger.WrapHandler' handler from the 'swaggo/http-swagger' library. Subsequently, when examining the 'WrapHandler' function, we observe the following code block within the 'swagger.go' file.</p><br>
 
-	<p>As a side note, it should be mentioned that the vulnerability has actually been fixed with the following commit in version 1.2.6. This is because, in versions after 1.2.6, the application only allows the GET method. Most likely, the vulnerability intended to be fixed was the potential denial-of-service (DoS) caused by loading a large number of files using the PUT method, which could consume excessive memory. However, another malicious use of the PUT method could be the XSS vulnerability described in this blog post.
+	<p>As a side note, it should be mentioned that the vulnerability has actually been fixed with the following commit in version 1.2.6. This is because, in versions after 1.2.6, the application only allows the GET method. Most likely, the vulnerability intended to be fixed was the potential denial-of-service (DoS) caused by loading a large number of files using the PUT method, which could consume excessive memory. However, another malicious use of the PUT method could be the XSS vulnerability described in this blog post.<br>
 Fix Commit: https://github.com/swaggo/http-swagger/commit/b7d83e8fba85a7a51aa7e45e8244b4173f15049e</p>
     <pre>
 
