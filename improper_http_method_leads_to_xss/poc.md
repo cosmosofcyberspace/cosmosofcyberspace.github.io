@@ -153,6 +153,15 @@ func main() {
 
 ```
 
+
+<img width="971" alt="image" src="https://github.com/cosmosofcyberspace/cosmosofcyberspace.github.io/assets/64871981/b6f97e6b-30f8-462d-b273-59a0d7c838b2"><br>
+<img width="1032" alt="image" src="https://github.com/cosmosofcyberspace/cosmosofcyberspace.github.io/assets/64871981/7bfece45-69f8-409f-baff-a59a9d9b8349"><br>
+<img width="894" alt="image" src="https://github.com/cosmosofcyberspace/cosmosofcyberspace.github.io/assets/64871981/99479089-0c14-4a27-976a-ddf4b0640ac0"><br>
+
+
+
+
+
 ### Impact<hr>
 
 The attacker can store any desired file in memory using the PUT method. The attacker may store an HTML file containing malicious JavaScript code in memory. Subsequently, the attacker can conduct an XSS attack by sharing the URL with regular users.
