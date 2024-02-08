@@ -21,7 +21,8 @@
 <h1>Missing IP Address Control in isPublic() Function Leads to SSRF Bypass PoC</h1>
 <pre>
 <b><Software: https://www.npmjs.com/package/ip</b>
-<b>Version: <= 1.1.8 (v1.1.8)</b>
+<b>Version: NPM IP Package <= 1.1.8 (NPM IP Package v.1.1.8 and before)</b>
+<a href="https://www.npmjs.com/package/ip">Library Link</a>
 <b>Fixed Version: None </b>
 <b>CVE ID: CVE-2023-42282</b>
 <b>Vulnerability Type: Security Misconfiguration</b>
@@ -35,6 +36,7 @@ Get your ip address, compare ip addresses, validate ip addresses, etc.</br>
 
     
 <h3>Description of the vulnerability:</h3>
+An issue in NPM IP Package v.1.1.8 and before allows an attacker to execute arbitrary code and obtain sensitive information via the isPublic() function.<br>
 In the code snippet of library, a security vulnerability arises due to the ip.isPublic function's incorrect identification of the IP address 0x7f.1 as public.</br>
 This address is actually a hexadecimal representation of the private IP 127.0.0.1. </br>
 This misclassification can lead to potential Server-Side Request Forgery (SSRF) attacks, as the code may unintentionally permit HTTP requests to internal network resources, creating a significant security risk.</br> 
