@@ -1,48 +1,69 @@
-XSS Vulnerability in AVE System Web Client
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Vulnerability in AVE System Web Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>XSS Vulnerability in AVE System Web Client</h1>
 
+    <div class="section">
+        <h2>Version Details</h2>
+        <p><strong>Version:</strong> AVE System Web Client Version: 2.1.131.13992</p>
+        <p><strong>Fixed Version:</strong> None</p>
+        <p><strong>CVE ID:</strong> None</p>
+        <p><strong>Vulnerability Type:</strong> Cross Site Scripting (XSS)</p>
+    </div>
 
-Version: AVE System Web Client Version: 2.1.131.13992
-Fixed Version: None
-CVE ID: None
-Vulnerability Type: Cross Site Scripting (XSS)
+    <div class="section">
+        <h2>Description of the Product</h2>
+        <p>AVE Web Client is a lightweight version of AVE Client. It doesn’t have to be installed and can be run in any Web browser (Chrome, IE, Firefox, etc.). It is a thin client designed for basic work with AVE (checking the progress of data reading, generating reports, reading and displaying data).</p>
+        <p>This module is also intended for outside traders, who need to have a quick overview of customers’ energy consumption, and for end users, who can display only selected data, not complete sets of meter reading data.</p>
+    </div>
 
-    
+    <div class="section">
+        <h2>Description of the Vulnerability</h2>
+        <p>Due to insufficient security measures in all input fields within the application, an XSS (Cross-Site Scripting) vulnerability exists.</p>
+    </div>
 
-Description of the product:
+    <div class="section">
+        <h2>Root Cause</h2>
+        <p>The causes of the XSS vulnerability stem from processing user input in a way that allows JavaScript execution. For example, if HTML encoding is not applied to input received from users, it should be implemented to prevent providing the browser’s JavaScript engine with tags capable of executing JavaScript.</p>
+        <p>Additionally, a whitelist should be created for attributes that allow JavaScript execution; otherwise, an attacker could inject and execute JavaScript code.</p>
+    </div>
 
-AVE Web Client is a lightweight version of AVE Client. It doesn’t have to be installed and can be run in any Web browser (Chrome, IE, Firefox, etc.). 
-It is a thin client designed for basic work with AVE (checking the progress of data reading, generating reports, reading and displaying data).
-This module is also intended for outside traders, who need to have a quick overview of customers’ energy consumption, and for end users, who can display only selected data, 
-not complete sets of meter reading data.
+    <div class="section">
+        <h2>Proof of Concept (PoC)</h2>
+        <p><code>&lt;img src="resim.png"&gt; &lt;/img&gt;</code></p>
+    </div>
 
-
-    
-Description of the vulnerability:
-
-Due to insufficient security measures in all input fields within the application, an XSS (Cross-Site Scripting) vulnerability exists.
-
-
-    
-Root Cause:
-
-The causes of the XSS vulnerability stem from processing user input in a way that allows JavaScript execution. 
-For example, if HTML encoding is not applied to input received from users, it should be implemented to prevent providing the browser’s JavaScript engine with tags capable of executing JavaScript. 
-Additionally, a whitelist should be created for attributes that allow JavaScript execution; otherwise, an attacker could inject and execute JavaScript code.
-
-    
-PoC:
-
-
-<img src="resim.png"> </img>
-
-    
-
-
-Impact of XSS vulnerabilities
-
-The actual impact of an XSS attack generally depends on the nature of the application, its functionality and data, and the status of the compromised user. For example:
-
-    In a brochureware application, where all users are anonymous and all information is public, the impact will often be minimal.
-    In an application holding sensitive data, such as banking transactions, emails, or healthcare records, the impact will usually be serious.
-    If the compromised user has elevated privileges within the application, then the impact will generally be critical, allowing the attacker to take full control of the vulnerable application and compromise all users and their data.
-
+    <div class="section">
+        <h2>Impact of XSS Vulnerabilities</h2>
+        <p>The actual impact of an XSS attack generally depends on the nature of the application, its functionality and data, and the status of the compromised user. For example:</p>
+        <ul>
+            <li>In a brochureware application, where all users are anonymous and all information is public, the impact will often be minimal.</li>
+            <li>In an application holding sensitive data, such as banking transactions, emails, or healthcare records, the impact will usually be serious.</li>
+            <li>If the compromised user has elevated privileges within the application, then the impact will generally be critical, allowing the attacker to take full control of the vulnerable application and compromise all users and their data.</li>
+        </ul>
+    </div>
+</body>
+</html>
