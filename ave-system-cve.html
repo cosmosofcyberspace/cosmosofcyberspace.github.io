@@ -1,0 +1,48 @@
+XSS Vulnerability in AVE System Web Client
+
+
+Version: AVE System Web Client Version: 2.1.131.13992
+Fixed Version: None
+CVE ID: None
+Vulnerability Type: Cross Site Scripting (XSS)
+
+    
+
+Description of the product:
+
+AVE Web Client is a lightweight version of AVE Client. It doesn’t have to be installed and can be run in any Web browser (Chrome, IE, Firefox, etc.). 
+It is a thin client designed for basic work with AVE (checking the progress of data reading, generating reports, reading and displaying data).
+This module is also intended for outside traders, who need to have a quick overview of customers’ energy consumption, and for end users, who can display only selected data, 
+not complete sets of meter reading data.
+
+
+    
+Description of the vulnerability:
+
+Due to insufficient security measures in all input fields within the application, an XSS (Cross-Site Scripting) vulnerability exists.
+
+
+    
+Root Cause:
+
+The causes of the XSS vulnerability stem from processing user input in a way that allows JavaScript execution. 
+For example, if HTML encoding is not applied to input received from users, it should be implemented to prevent providing the browser’s JavaScript engine with tags capable of executing JavaScript. 
+Additionally, a whitelist should be created for attributes that allow JavaScript execution; otherwise, an attacker could inject and execute JavaScript code.
+
+    
+PoC:
+
+
+<img src="resim.png"> </img>
+
+    
+
+
+Impact of XSS vulnerabilities
+
+The actual impact of an XSS attack generally depends on the nature of the application, its functionality and data, and the status of the compromised user. For example:
+
+    In a brochureware application, where all users are anonymous and all information is public, the impact will often be minimal.
+    In an application holding sensitive data, such as banking transactions, emails, or healthcare records, the impact will usually be serious.
+    If the compromised user has elevated privileges within the application, then the impact will generally be critical, allowing the attacker to take full control of the vulnerable application and compromise all users and their data.
+
