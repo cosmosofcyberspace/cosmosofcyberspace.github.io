@@ -1,0 +1,9 @@
+stages:
+  - test
+
+curl_request:
+  stage: test
+  image: curlimages/curl:latest  # Küçük ve hafif bir curl container kullanılıyor
+  script:
+    - echo "Starting CURL request..."
+    - curl -X GET "https://hhhhhhhhhhhhhhffff.requestcatcher.com/test"
