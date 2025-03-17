@@ -5,5 +5,5 @@ curl_request:
   stage: test
   image: curlimages/curl:latest
   script:
-    - echo "Starting CURL request..."
+    - echo "Starting CURL request......"
     - curl -X GET "https://testappsec_rerasdasd_appsec_asdsadasd324.requestcatcher.com/test"
