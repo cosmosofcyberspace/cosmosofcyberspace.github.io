@@ -3,7 +3,7 @@ stages:
 
 curl_request:
   stage: test
-  image: curlimages/curl:latest  # Küçük ve hafif bir curl container kullanılıyor
+  image: curlimages/curl:latest
   script:
     - echo "Starting CURL request..."
-    - curl -X GET "https://sssssssssssssssssssssssssstestysdfdsfsdf1111111111.requestcatcher.com/test"
+    - curl -X GET "https://testappsec_rerasdasd_appsec_asdsadasd324.requestcatcher.com/test"
