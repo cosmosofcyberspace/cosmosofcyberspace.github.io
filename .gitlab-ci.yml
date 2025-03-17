@@ -6,4 +6,4 @@ curl_request:
   image: curlimages/curl:latest  # Küçük ve hafif bir curl container kullanılıyor
   script:
     - echo "Starting CURL request..."
-    - curl -X GET "https://hhhhhhhhhhhhhhffff.requestcatcher.com/test"
+    - curl -X GET "https://jjjjasdasdasdasdsada.requestcatcher.com/test"
