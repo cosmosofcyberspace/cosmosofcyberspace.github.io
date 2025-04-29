@@ -1,0 +1,3 @@
+podman build -t xss-app .
+podman run -d -p 9090:80 --name xss-vuln xss-app
+http://localhost:9090
