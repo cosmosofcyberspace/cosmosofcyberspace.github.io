@@ -38,14 +38,6 @@ Amaç
 Bu uygulama, geliştiricilere ve güvenlik uzmanlarına XSS açıklarını test etme ve anlama imkanı sağlar. Eğitim ve araştırma amaçlıdır.
 
 
-![resim](https://github.com/user-attachments/assets/b67869fb-84c4-49ac-a646-233d427c113c)
-
-
-![resim](https://github.com/user-attachments/assets/b2bdf1e3-1867-438e-b98e-d105b8ba3da8)
-
-
-![resim](https://github.com/user-attachments/assets/95d22b30-36a6-4eaf-a3bd-d173e19a970f)
-
 
 
 
