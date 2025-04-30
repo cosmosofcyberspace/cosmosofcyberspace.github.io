@@ -48,15 +48,18 @@ Bu uygulama, geliştiricilere ve güvenlik uzmanlarına XSS açıklarını test 
 1. **HTTP Sunucu Başlatın:**
 
    ```bash
-   python3 -m http.server 4455
-   
-![resim](https://github.com/user-attachments/assets/48cf8088-f243-4d95-92d1-d187704198ca)
+   python3 -m http.server 5555
 
 
 
-![resim](https://github.com/user-attachments/assets/4c3d98b9-0f6a-4b3b-b8d2-09f05ed90894)
+
+![resim](https://github.com/user-attachments/assets/ffa87b00-35f6-4a16-a801-1f72046e8da8)
 
 
+
+
+
+https://github.com/user-attachments/assets/3dfd7186-7fd9-4c40-9fef-559407954a56
 
 
 
