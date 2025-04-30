@@ -28,6 +28,11 @@ Bu proje, Stored XSS (Cross-Site Scripting) güvenlik açığını test ortamın
 
    http://localhost:9090
 
+![resim](https://github.com/user-attachments/assets/24d9a48c-3a95-4f61-96b4-f18024761c23)
+
+
+
+
 Amaç
 
 Bu uygulama, geliştiricilere ve güvenlik uzmanlarına XSS açıklarını test etme ve anlama imkanı sağlar. Eğitim ve araştırma amaçlıdır.
