@@ -2,6 +2,11 @@
 
 Bu proje, Stored XSS (Cross-Site Scripting) güvenlik açığını test ortamında exploit etmek amacıyla oluşturulmuş basit bir web uygulamasıdır.
 
+Amaç
+
+Bu uygulama, geliştiricilere ve güvenlik uzmanlarına XSS açıklarını test etme ve anlama imkanı sağlar. Eğitim ve araştırma amaçlıdır.
+
+
 ## Gereksinimler
 
 - [Podman](https://podman.io/getting-started/installation)
@@ -33,9 +38,6 @@ Bu proje, Stored XSS (Cross-Site Scripting) güvenlik açığını test ortamın
 
 
 
-Amaç
-
-Bu uygulama, geliştiricilere ve güvenlik uzmanlarına XSS açıklarını test etme ve anlama imkanı sağlar. Eğitim ve araştırma amaçlıdır.
 
 
 
