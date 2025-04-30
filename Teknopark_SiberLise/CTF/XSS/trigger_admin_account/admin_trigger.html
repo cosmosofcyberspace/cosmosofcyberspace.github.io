@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cookie Stealer</title>
+</head>
+<body>
+    <script>
+        // Cookie oluştur
+        document.cookie = "admin_cookie=TY{TURK1SH_XSS_HuNT3R_2025}";
+        
+        function sendRequest() {
+            // iframe oluştur ve XSS payload'ını gönder
+            const iframe = document.createElement('iframe');
+            iframe.src = 'http://localhost:9090';
+            document.body.appendChild(iframe);
+            
+            // 1 saniye sonra iframe'i kaldır
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 1000);
+        }
+
+        // İlk isteği gönder
+        sendRequest();
+        
+        // Her 5 saniyede bir istek gönder
+        setInterval(sendRequest, 5000);
+    </script>
+</body>
+</html>
