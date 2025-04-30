@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Fetcher</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .secure-option {
+            margin-top: 15px;
+            background-color: #e6f7e6;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .toggle-container {
+            margin-top: 10px;
+        }
+        .toggle-label {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Fetcher</h1>
+        <p>Enter a URL to fetch an image from our servers</p>
+        
+        <form id="fetch-form" action="/fetch" method="GET">
+            <div class="form-group">
+                <label for="url">Image URL:</label>
+                <input type="text" id="url" name="url" placeholder="https://example.com/image.png" required>
+            </div>
+            
+            <div class="secure-option">
+                <div class="toggle-container">
+                    <input type="checkbox" id="secure-toggle" onchange="toggleSecureMode()">
+                    <label for="secure-toggle" class="toggle-label"><strong>Use Secure Mode</strong> (prevents SSRF attacks)</label>
+                </div>
+                <div id="secure-info" style="margin-top: 5px; display: none;">
+                    <small>Secure mode only allows specific trusted domains and image file types.</small>
+                    <div style="margin-top: 5px;">
+                        <small><strong>Allowed domains:</strong> example.com, imgur.com, ibb.co, postimg.cc, static.wikia.nocookie.net</small>
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <small><strong>Allowed file types:</strong> .png, .jpg, .jpeg, .gif, .webp</small>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit">Fetch Image</button>
+        </form>
+        
+        {% if image_data %}
+        <div class="result">
+            <h2>Fetched Image:</h2>
+            <img src="data:{{ content_type }};base64,{{ image_data }}" alt="Fetched image">
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            <p>Error: {{ error }}</p>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        function toggleSecureMode() {
+            const secureToggle = document.getElementById('secure-toggle');
+            const form = document.getElementById('fetch-form');
+            const secureInfo = document.getElementById('secure-info');
+            
+            if (secureToggle.checked) {
+                form.action = '/secure-fetch';
+                secureInfo.style.display = 'block';
+            } else {
+                form.action = '/fetch';
+                secureInfo.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html> 
