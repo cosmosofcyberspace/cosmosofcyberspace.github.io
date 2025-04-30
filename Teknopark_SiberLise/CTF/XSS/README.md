@@ -18,6 +18,10 @@ Bu proje, Stored XSS (Cross-Site Scripting) güvenlik açığını test ortamın
    ```bash
    podman run -d -p 9090:80 --name xss-vuln xss-app
 
+![resim](https://github.com/user-attachments/assets/716eae15-d81a-4ff5-94ea-26c36ad5833a)
+
+
+
 3. **Tarayıcıdan uygulamaya erişin:**
 
    ```bash
