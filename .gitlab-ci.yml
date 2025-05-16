@@ -1,1 +1,9 @@
+stages:
+  - curl_request
 
+curl_job:
+  stage: curl_request
+  image: curlimages/curl:latest
+  script:
+    - echo "Sending request to https://nnnmmm33sssssadasdasd.requestcatcher.com/test"
+    - curl -v https://nnnmmm33sssssadasdasd.requestcatcher.com/test
