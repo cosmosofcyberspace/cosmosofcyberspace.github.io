@@ -1,0 +1,23 @@
+trufflehog_incremental:
+  stage: test
+  image:
+    name: trufflesecurity/trufflehog@sha256:<PINNED_DIGEST>
+    entrypoint: [""]
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|dev|release.*)$/'
+  variables:
+    GIT_DEPTH: "100"
+  script:
+    - |
+      if [ -n "$CI_COMMIT_BEFORE_SHA" ] && [ "$CI_COMMIT_BEFORE_SHA" != "0000000000000000000000000000000000000000" ]; then
+        BASE="$CI_COMMIT_BEFORE_SHA"
+      else
+        BASE=""
+      fi
+    - |
+      trufflehog git "file://$CI_PROJECT_DIR" \
+        ${BASE:+--since-commit="$BASE"} \
+        --branch="$CI_COMMIT_BRANCH" \
+        --results=verified,unknown \
+        --fail \
+        --json
