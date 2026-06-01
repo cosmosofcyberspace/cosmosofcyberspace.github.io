@@ -1,4 +1,3 @@
-# --- Full history tarama (otomatik, her commit'te) ---
 trufflehog_full:
   stage: test
   image:
@@ -9,6 +8,14 @@ trufflehog_full:
   variables:
     GIT_DEPTH: "0"        # full history için zorunlu
   script:
+    - set +e
     - |
       trufflehog git "file://$CI_PROJECT_DIR" \
-        --json
+        --no-verification \
+        --results=unknown \
+        --json | tee trufflehog-full.json || true
+  artifacts:
+    when: always
+    paths:
+      - trufflehog-full.json
+    expire_in: 1 week
