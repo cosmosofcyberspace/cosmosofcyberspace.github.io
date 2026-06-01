@@ -1,0 +1,14 @@
+# --- Full history tarama (otomatik, her commit'te) ---
+trufflehog_full:
+  stage: test
+  image:
+    name: trufflesecurity/trufflehog@sha256:<PINNED_DIGEST>
+    entrypoint: [""]
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(master|dev|release.*)$/'
+  variables:
+    GIT_DEPTH: "0"        # full history için zorunlu
+  script:
+    - |
+      trufflehog git "file://$CI_PROJECT_DIR" \
+        --json
